@@ -12,6 +12,7 @@
 		F54EF1712B0B6BF10075D3DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F54EF1702B0B6BF10075D3DE /* Assets.xcassets */; };
 		F54EF1742B0B6BF10075D3DE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F54EF1732B0B6BF10075D3DE /* Preview Assets.xcassets */; };
 		F5BF3FAA2B0BAE4A00A52161 /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF3FA92B0BAE4A00A52161 /* TaskDetailView.swift */; };
+		F5BF3FAE2B0E0BE800A52161 /* AddTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF3FAD2B0E0BE800A52161 /* AddTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		F54EF1702B0B6BF10075D3DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F54EF1732B0B6BF10075D3DE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5BF3FA92B0BAE4A00A52161 /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
+		F5BF3FAD2B0E0BE800A52161 /* AddTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 		F54EF16B2B0B6BEF0075D3DE /* Adel app */ = {
 			isa = PBXGroup;
 			children = (
+				F5BF3FAD2B0E0BE800A52161 /* AddTask.swift */,
 				F54EF16C2B0B6BEF0075D3DE /* Adel_appApp.swift */,
 				F54EF16E2B0B6BEF0075D3DE /* ContentView.swift */,
 				F5BF3FA92B0BAE4A00A52161 /* TaskDetailView.swift */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5BF3FAE2B0E0BE800A52161 /* AddTask.swift in Sources */,
 				F54EF16F2B0B6BEF0075D3DE /* ContentView.swift in Sources */,
 				F54EF16D2B0B6BEF0075D3DE /* Adel_appApp.swift in Sources */,
 				F5BF3FAA2B0BAE4A00A52161 /* TaskDetailView.swift in Sources */,

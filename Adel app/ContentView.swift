@@ -13,13 +13,15 @@ class Task: Identifiable, ObservableObject, Hashable {
     @Published var name: String
     @Published var description: String?
     @Published var isDone: Bool
-    @Published var priority: Priority?
+    @Published var priority: Priority
+    @Published var country: String
 
-    init(name: String, description: String?, isDone: Bool, priority: Priority?) {
+    init(name: String, description: String?, isDone: Bool, priority: Priority, country: String) {
         self.name = name
         self.description = description
         self.isDone = isDone
         self.priority = priority
+        self.country = country
     }
 
     static func == (lhs: Task, rhs: Task) -> Bool {
@@ -33,9 +35,9 @@ class Task: Identifiable, ObservableObject, Hashable {
 
 class TaskStore: ObservableObject {
     @Published var tasks: [Task] = [
-        Task(name: "Tâche 1", description: "Description de la tâche 1", isDone: false, priority: .low),
-        Task(name: "Tâche 2", description: "Description de la tâche 2", isDone: true, priority: .medium),
-        Task(name: "Tâche 3", description: "Description de la tâche 3", isDone: false, priority: .high)
+        Task(name: "Tâche 1", description: "Description de la tâche 1", isDone: false, priority: .low, country: "France"),
+        Task(name: "Tâche 2", description: "Description de la tâche 2", isDone: true, priority: .medium, country: "Belgique"),
+        Task(name: "Tâche 3", description: "Description de la tâche 3", isDone: false, priority: .high, country: "Suisse")
     ]
     
     func updateTask(task: Task) {
@@ -45,52 +47,6 @@ class TaskStore: ObservableObject {
         }
 }
 
-struct AddTaskView: View {
-    @ObservedObject var taskStore: TaskStore
-    @Binding var isPresented: Bool
-    @State private var newTaskName = ""
-    @State private var newTaskDescription = ""
-    @State private var newTaskIsDone = false
-    @State private var newTaskPriority: Priority = .low
-
-    var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Ajouter une tâche")) {
-                    TextField("Nom de la tâche", text: $newTaskName)
-                    TextField("Description de la tâche", text: $newTaskDescription)
-                    Toggle("Tâche terminée", isOn: $newTaskIsDone)
-                    Picker("Priorité", selection: $newTaskPriority) {
-                        ForEach(Priority.allCases, id: \.self) {
-                            Text($0.rawValue)
-                        }
-                    }
-                }
-                Button(action: {
-                    addTask()
-                    isPresented = false
-                }) {
-                    Text("Ajouter")
-                }
-            }
-            .navigationTitle("Nouvelle tâche")
-            .navigationBarItems(trailing: Button("Fermer") {
-                isPresented = false
-            })
-        }
-    }
-
-    func addTask() {
-        let newTask = Task(name: newTaskName, description: newTaskDescription, isDone: newTaskIsDone, priority: newTaskPriority)
-        taskStore.tasks.append(newTask)
-
-    
-        newTaskName = ""
-        newTaskDescription = ""
-        newTaskIsDone = false
-        newTaskPriority = .low
-    }
-}
 
 struct ContentView: View {
     @ObservedObject private var taskStore = TaskStore()
@@ -142,12 +98,14 @@ struct TaskRow: View {
                 .font(.headline)
             Text(task.description ?? "")
                 .foregroundColor(.gray)
-            Text("Priorité: \(task.priority?.rawValue ?? "")")
+            Text("Priorité: \(task.priority.rawValue)")
                 .foregroundColor(.blue)
                 .font(.subheadline)
             Text("Tâche terminée: \(task.isDone ? "Oui" : "Non")")
                 .foregroundColor(.blue)
                 .font(.subheadline)
+            Text(task.country)
+                .foregroundColor(.gray)
             Spacer()
         }
         .padding()
@@ -160,3 +118,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+
