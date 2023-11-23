@@ -7,6 +7,12 @@ enum Priority: String, CaseIterable {
     case high = "High"
 }
 
+enum TaskFilter: String, CaseIterable {
+    case all = "Toutes"
+    case done = "Terminées"
+    case notDone = "Non Terminées"
+}
+
 
 class Task: Identifiable, ObservableObject, Hashable {
     var id = UUID()
@@ -52,6 +58,8 @@ struct ContentView: View {
     @ObservedObject private var taskStore = TaskStore()
     @State private var isAddTaskViewPresented: Bool = false
     @State private var selectedTask: Task?
+    @State private var selectedFilter: TaskFilter = .all
+
 
     var body: some View {
         NavigationView {
@@ -93,24 +101,50 @@ struct TaskRow: View {
     @ObservedObject var task: Task
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(task.name)
-                .font(.headline)
-            Text(task.description ?? "")
-                .foregroundColor(.gray)
-            Text("Priorité: \(task.priority.rawValue)")
-                .foregroundColor(.blue)
-                .font(.subheadline)
-            Text("Tâche terminée: \(task.isDone ? "Oui" : "Non")")
-                .foregroundColor(.blue)
-                .font(.subheadline)
-            Text(task.country)
-                .foregroundColor(.gray)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(task.name)
+                    .font(.headline)
+                Text(task.description ?? "")
+                    .foregroundColor(.gray)
+                Text("Priorité: \(task.priority.rawValue)")
+                    .foregroundColor(priorityColor(for: task.priority))
+                    .font(.subheadline)
+                Text(task.country)
+                    .foregroundColor(.gray)
+            }
             Spacer()
+            Image(systemName: task.isDone ? "checkmark.circle.fill" : "circle")
+                .foregroundColor(task.isDone ? .green : .gray)
+            Image(systemName: priorityIcon(for: task.priority))
+                .foregroundColor(priorityColor(for: task.priority))
         }
         .padding()
     }
+
+    private func priorityIcon(for priority: Priority) -> String {
+        switch priority {
+        case .high:
+            return "exclamationmark.triangle.fill"
+        case .medium:
+            return ""
+        case .low:
+            return ""
+        }
+    }
+
+    private func priorityColor(for priority: Priority) -> Color {
+        switch priority {
+        case .high:
+            return .red
+        case .medium:
+            return .yellow
+        case .low:
+            return .green
+        }
+    }
 }
+
 
 
 struct ContentView_Previews: PreviewProvider {
